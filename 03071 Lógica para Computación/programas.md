@@ -3,6 +3,7 @@
 ## Se utilizan dos software
 
 * DFD: [Descargar aquí][dfd]
+* [link](https://dfd.softonic.com/){:target="_blank"}
 * Pseint: https://pseint.sourceforge.net/
 
 Para el uso de DFD es solamente en el proyecto 1
