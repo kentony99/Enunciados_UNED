@@ -1,1 +1,4 @@
+kramdown:
+  input: Kramdown
+
 markdown: kramdown
