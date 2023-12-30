@@ -6,7 +6,7 @@
 * Pseint: https://pseint.sourceforge.net/
 * Click ![here](https://www.geeksforgeeks.org/) 
 to visit GeeksForGeeks website.
-[Google!](http://google.com){:target='_blank'}
+[Google!](http://google.com){:'_blank'}
 This is *red*{: style="color: red"}.
 Para el uso de DFD es solamente en el proyecto 1
 <a href="https://dfd.softonic.com/" target="_blank">Descargar aquí</a>
