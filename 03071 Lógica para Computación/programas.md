@@ -4,7 +4,7 @@
 
 * DFD: <a href="https://dfd.softonic.com/" target="_blank">Descargar aquí</a>
 * Pseint: https://pseint.sourceforge.net/
-* Click [here](https://www.geeksforgeeks.org/){:target="_blank"}  
+* Click ![here](https://www.geeksforgeeks.org/) 
 to visit GeeksForGeeks website.
 
 Para el uso de DFD es solamente en el proyecto 1
