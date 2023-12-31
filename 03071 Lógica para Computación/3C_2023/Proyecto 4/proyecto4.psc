@@ -42,7 +42,7 @@ Algoritmo proyecto4
 			3:
 				OpcionTres(salariosBrutos,deducciones,salariosNetos);
 			De Otro Modo:
-				Escribir "Debe ser una opción valida [1-4]";
+				Escribir "Debe ser una opciÃ³n valida [1-4]";
 		FinSegun
 	Hasta Que opcion=4
 	
@@ -86,65 +86,6 @@ SubProceso CargarHoras (matrizEmpresa)
 			matrizEmpresa[i,j]=Aleatorio(6,12);
 		FinPara
 	FinPara
-	matrizEmpresa[0,0] = 10;
-	matrizEmpresa[0,1] = 10;
-	matrizEmpresa[0,2] = 8;
-	matrizEmpresa[0,3] = 6;
-	matrizEmpresa[0,4] = 7;
-	
-	matrizEmpresa[1,0] = 10;
-	matrizEmpresa[1,1] = 12;
-	matrizEmpresa[1,2] = 6;
-	matrizEmpresa[1,3] = 7;
-	matrizEmpresa[1,4] = 6;
-	
-	matrizEmpresa[2,0] = 12;
-	matrizEmpresa[2,0] = 9;
-	matrizEmpresa[2,2] = 11;
-	matrizEmpresa[2,3] = 8;
-	matrizEmpresa[2,4] = 12;
-	
-	matrizEmpresa[3,0] = 6;
-	matrizEmpresa[3,1] = 8;
-	matrizEmpresa[3,2] = 7;
-	matrizEmpresa[3,3] = 10;
-	matrizEmpresa[3,4] = 10;
-	
-	matrizEmpresa[4,0] = 6;
-	matrizEmpresa[4,1] = 8;
-	matrizEmpresa[4,2] = 8;
-	matrizEmpresa[4,3] = 10;
-	matrizEmpresa[4,4] = 9;
-	
-	matrizEmpresa[5,0] = 11;
-	matrizEmpresa[5,1] = 6;
-	matrizEmpresa[5,2] = 9;
-	matrizEmpresa[5,3] = 10;
-	matrizEmpresa[5,4] = 8;
-	
-	matrizEmpresa[6,0] = 11;
-	matrizEmpresa[6,1] = 9;
-	matrizEmpresa[6,2] = 12;
-	matrizEmpresa[6,3] = 9;
-	matrizEmpresa[6,4] = 6;
-	
-	matrizEmpresa[7,0] = 6;
-	matrizEmpresa[7,1] = 6;
-	matrizEmpresa[7,2] = 10;
-	matrizEmpresa[7,3] = 8;
-	matrizEmpresa[7,4] = 10;
-	
-	matrizEmpresa[8,0] = 9;
-	matrizEmpresa[8,1] = 8;
-	matrizEmpresa[8,2] = 7;
-	matrizEmpresa[8,3] = 9;
-	matrizEmpresa[8,4] = 8;
-	
-	matrizEmpresa[9,0] = 9;
-	matrizEmpresa[9,1] = 7;
-	matrizEmpresa[9,2] = 8;
-	matrizEmpresa[9,3] = 11;
-	matrizEmpresa[9,4] = 7;
 FinSubProceso
 
 SubProceso ImprimirMatriz (matrizEmpresa)
