@@ -1,4 +1,4 @@
-# Programas necesarios para observar estos proyectos
+# Programas necesarios para realizar estos proyectos
 
 ## Se utilizan dos software
 
