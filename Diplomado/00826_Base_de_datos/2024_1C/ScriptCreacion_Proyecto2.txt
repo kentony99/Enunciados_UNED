@@ -1,0 +1,198 @@
+USE [master]
+GO
+
+/****** Object:  Database [AUTOTECH]    Script Date: 3/7/2024 4:22:54 PM ******/
+IF EXISTS (SELECT * FROM SYS.databases WHERE NAME = 'AUTOTECH2')
+	DROP DATABASE [AUTOTECH]
+GO
+
+/****** Object:  Database [AUTOTECH]    Script Date: 3/7/2024 4:22:54 PM ******/
+CREATE DATABASE [AUTOTECH]
+GO
+
+USE [AUTOTECH]
+GO
+
+/****** Object:  Table [dbo].[CLIENTES]    Script Date: 3/7/2024 4:23:38 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CLIENTES]') AND type in (N'U'))
+DROP TABLE [dbo].[CLIENTES]
+GO
+
+/****** Object:  Table [dbo].[CLIENTES]    Script Date: 3/7/2024 4:23:38 PM ******/
+CREATE TABLE [dbo].[CLIENTES](
+	[Cedula] [nvarchar](30) NOT NULL,
+	[Nombre] [nvarchar](50) NOT NULL,
+	[Apellido1] [nvarchar](50) NOT NULL,
+	[Apellido2] [nvarchar](50) NOT NULL,
+	[Telefono] [nvarchar](50) NOT NULL,
+	[Direccion] [nvarchar](max) NOT NULL,
+	[Correo] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_CLIENTES] PRIMARY KEY CLUSTERED ([Cedula] ASC)
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[EMPLEADOS]    Script Date: 3/7/2024 4:24:02 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EMPLEADOS]') AND type in (N'U'))
+DROP TABLE [dbo].[EMPLEADOS]
+GO
+
+/****** Object:  Table [dbo].[EMPLEADOS]    Script Date: 3/7/2024 4:24:02 PM ******/
+CREATE TABLE [dbo].[EMPLEADOS](
+	[IDEmpleado] [int] NOT NULL,
+	[Cedula] [nvarchar](30) NOT NULL,
+	[Nombre] [nvarchar](50) NOT NULL,
+	[Apellido1] [nvarchar](50) NOT NULL,
+	[Apellido2] [nvarchar](50) NOT NULL,
+	[Cargo] [nvarchar](50) NOT NULL,
+	[Especialidad] [nvarchar](50) NOT NULL,
+	[FechaContratacion] [date] NOT NULL,
+ CONSTRAINT [PK_EMPLEADOS_1] PRIMARY KEY CLUSTERED ([IDEmpleado] ASC)
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[VEHICULO]    Script Date: 3/7/2024 4:25:33 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[VEHICULO]') AND type in (N'U'))
+DROP TABLE [dbo].[VEHICULO]
+GO
+
+/****** Object:  Table [dbo].[VEHICULO]    Script Date: 3/7/2024 4:25:33 PM ******/
+CREATE TABLE [dbo].[VEHICULO](
+	[Placa] [nvarchar](15) NOT NULL,
+	[Marca] [nvarchar](50) NOT NULL,
+	[Modelo] [nvarchar](50) NOT NULL,
+	[Anio] [int] NOT NULL,
+	[Color] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_VEHICULO] PRIMARY KEY CLUSTERED ([Placa] ASC)
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[ORDENES_ESTADOS]    Script Date: 3/7/2024 4:46:54 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ORDENES_ESTADOS]') AND type in (N'U'))
+DROP TABLE [dbo].[ORDENES_ESTADOS]
+GO
+
+/****** Object:  Table [dbo].[ORDENES_ESTADOS]    Script Date: 3/7/2024 4:46:54 PM ******/
+CREATE TABLE [dbo].[ORDENES_ESTADOS](
+	[IDEstado] [int] NOT NULL,
+	[Descripcion] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_ORDENES_ESTADOS] PRIMARY KEY CLUSTERED ([IDEstado] ASC) 
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[ORDENES]    Script Date: 3/7/2024 4:51:21 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ORDENES]') AND type in (N'U')) 
+BEGIN	
+	ALTER TABLE [dbo].[ORDENES] DROP CONSTRAINT [FK_ORDENES_VEHICULO]
+	ALTER TABLE [dbo].[ORDENES] DROP CONSTRAINT [FK_ORDENES_ORDENES_ESTADOS]
+	ALTER TABLE [dbo].[ORDENES] DROP CONSTRAINT [FK_ORDENES_CLIENTES]	
+	DROP TABLE [dbo].[ORDENES]
+END
+GO
+
+/****** Object:  Table [dbo].[ORDENES]    Script Date: 3/7/2024 4:51:21 PM ******/
+CREATE TABLE [dbo].[ORDENES](
+	[NumeroOrden] [int] NOT NULL,
+	[Descripcion] [nvarchar](max) NOT NULL,
+	[FechaIngreso] [date] NOT NULL,
+	[FechaEntrega] [date] NOT NULL,
+	[CedulaCliente] [nvarchar](30) NOT NULL,
+	[PlacaVehiculo] [nvarchar](15) NOT NULL,
+	[EstadoOrden] [int] NOT NULL,
+ CONSTRAINT [PK_ORDENES] PRIMARY KEY CLUSTERED([NumeroOrden] ASC),
+ CONSTRAINT [FK_ORDENES_CLIENTES] FOREIGN KEY([CedulaCliente]) REFERENCES [dbo].[CLIENTES] ([Cedula]),
+ CONSTRAINT [FK_ORDENES_ORDENES_ESTADOS] FOREIGN KEY([EstadoOrden]) REFERENCES [dbo].[ORDENES_ESTADOS] ([IDEstado]),
+ CONSTRAINT [FK_ORDENES_VEHICULO] FOREIGN KEY([PlacaVehiculo]) REFERENCES [dbo].[VEHICULO] ([Placa])
+) ON [PRIMARY] 
+GO
+
+/****** Object:  Table [dbo].[TIPO_REPUESTO]    Script Date: 3/7/2024 5:06:29 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TIPO_REPUESTO]') AND type in (N'U'))
+DROP TABLE [dbo].[TIPO_REPUESTO]
+GO
+
+/****** Object:  Table [dbo].[TIPO_REPUESTO]    Script Date: 3/7/2024 5:06:29 PM ******/
+CREATE TABLE [dbo].[TIPO_REPUESTO](
+	[IdTipoRepuesto] [int] NOT NULL,
+	[Descripcion] [varchar](100) NOT NULL,
+ CONSTRAINT [PK_TIPO_REPUESTO] PRIMARY KEY CLUSTERED ([IdTipoRepuesto] ASC) 
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[REPUESTOS]    Script Date: 3/7/2024 4:24:24 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[REPUESTOS]') AND type in (N'U'))
+BEGIN
+	ALTER TABLE [dbo].[REPUESTOS] DROP CONSTRAINT [FK_REPUESTOS_TIPO_REPUESTO]
+	DROP TABLE [dbo].[REPUESTOS]
+END
+GO
+
+/****** Object:  Table [dbo].[REPUESTOS]    Script Date: 3/7/2024 4:24:24 PM ******/
+CREATE TABLE [dbo].[REPUESTOS](
+	[NumeroParte] [nvarchar](50) NOT NULL,
+	[Nombre] [nvarchar](100) NOT NULL,
+	[Descripcion] [nvarchar](200) NOT NULL,
+	[CostoRepuesto] [real] NOT NULL,
+	[Cantidad] [int] NOT NULL,
+	[TipoRepuesto] [int] NOT NULL,
+ CONSTRAINT [PK_REPUESTOS] PRIMARY KEY CLUSTERED([NumeroParte] ASC),
+ CONSTRAINT [FK_REPUESTOS_TIPO_REPUESTO] FOREIGN KEY([TipoRepuesto]) REFERENCES [dbo].[TIPO_REPUESTO] ([IdTipoRepuesto])
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[SERVICIOS]    Script Date: 3/7/2024 4:25:11 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SERVICIOS]') AND type in (N'U'))
+BEGIN
+	ALTER TABLE [dbo].[SERVICIOS] DROP CONSTRAINT [FK_SERVICIOS_EMPLEADOS]
+	DROP TABLE [dbo].[SERVICIOS]
+END
+GO
+
+/****** Object:  Table [dbo].[SERVICIOS]    Script Date: 3/7/2024 4:25:11 PM ******/
+CREATE TABLE [dbo].[SERVICIOS](
+	[IDServicio] [int] NOT NULL,
+	[Descripcion] [nvarchar](200) NOT NULL,
+	[CostoManoObra] [real] NOT NULL,
+	[TiempoEjecucion] [int] NOT NULL,
+	[IDEmpleado] [int] NOT NULL,
+ CONSTRAINT [PK_SERVICIOS] PRIMARY KEY CLUSTERED ([IDServicio] ASC),
+ CONSTRAINT [FK_SERVICIOS_EMPLEADOS] FOREIGN KEY([IDEmpleado]) REFERENCES [dbo].[EMPLEADOS] ([IDEmpleado])
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[SERVICIOS_POR_ORDEN]    Script Date: 3/7/2024 4:53:42 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SERVICIOS_POR_ORDEN]') AND type in (N'U'))
+BEGIN
+	ALTER TABLE [dbo].[SERVICIOS_POR_ORDEN] DROP CONSTRAINT [FK_SERVICIOS_POR_ORDEN_SERVICIOS]
+	ALTER TABLE [dbo].[SERVICIOS_POR_ORDEN] DROP CONSTRAINT [FK_SERVICIOS_POR_ORDEN_ORDENES]
+	DROP TABLE [dbo].[SERVICIOS_POR_ORDEN]
+END
+GO
+
+/****** Object:  Table [dbo].[SERVICIOS_POR_ORDEN]    Script Date: 3/7/2024 4:53:42 PM ******/
+CREATE TABLE [dbo].[SERVICIOS_POR_ORDEN](
+	[IdServicio] [int] NOT NULL,
+	[NumeroOrden] [int] NOT NULL,
+ CONSTRAINT [PK_SERVICIOS_POR_ORDEN] PRIMARY KEY CLUSTERED(	[IdServicio] ASC,[NumeroOrden] ASC),
+ CONSTRAINT [FK_SERVICIOS_POR_ORDEN_ORDENES] FOREIGN KEY([NumeroOrden]) REFERENCES [dbo].[ORDENES] ([NumeroOrden]),
+ CONSTRAINT [FK_SERVICIOS_POR_ORDEN_SERVICIOS] FOREIGN KEY([IdServicio]) REFERENCES [dbo].[SERVICIOS] ([IDServicio])
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[REPUESTOS_POR_SERVICIOS]    Script Date: 3/7/2024 4:57:57 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[REPUESTOS_POR_SERVICIOS]') AND type in (N'U'))
+BEGIN
+	ALTER TABLE [dbo].[REPUESTOS_POR_SERVICIOS] DROP CONSTRAINT [FK_REPUESTOS_POR_SERVICIOS_SERVICIOS]
+	ALTER TABLE [dbo].[REPUESTOS_POR_SERVICIOS] DROP CONSTRAINT [FK_REPUESTOS_POR_SERVICIOS_REPUESTOS]
+	DROP TABLE [dbo].[REPUESTOS_POR_SERVICIOS]
+END
+GO
+
+/****** Object:  Table [dbo].[REPUESTOS_POR_SERVICIOS]    Script Date: 3/7/2024 4:57:57 PM ******/
+CREATE TABLE [dbo].[REPUESTOS_POR_SERVICIOS](
+	[NumeroParte] [nvarchar](50) NOT NULL,
+	[IdServicio] [int] NOT NULL,
+ CONSTRAINT [PK_REPUESTOS_POR_SERVICIOS] PRIMARY KEY CLUSTERED ([NumeroParte] ASC,[IdServicio] ASC),
+ CONSTRAINT [FK_REPUESTOS_POR_SERVICIOS_REPUESTOS] FOREIGN KEY([NumeroParte]) REFERENCES [dbo].[REPUESTOS] ([NumeroParte]),
+ CONSTRAINT [FK_REPUESTOS_POR_SERVICIOS_SERVICIOS] FOREIGN KEY([IdServicio]) REFERENCES [dbo].[SERVICIOS] ([IDServicio])
+) ON [PRIMARY]
+GO
