@@ -1,0 +1,180 @@
+USE [master]
+GO
+
+CREATE DATABASE [VIDEOTECAUNED]
+GO
+ 
+USE [VIDEOTECAUNED]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CategoriaPelicula](
+	[IdCategoria] [int] NOT NULL,
+	[NombreCategoria] [varchar](25) NOT NULL,
+	[Descripcion] [varchar](150) NOT NULL,
+ CONSTRAINT [PK_CategoriaPelicula] PRIMARY KEY CLUSTERED 
+(
+	[IdCategoria] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Cliente]    Script Date: 01/05/2024 17:58:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Cliente](
+	[IdCliente] [int] NOT NULL,
+	[Identificacion] [varchar](12) NOT NULL,
+	[FechaRegistro] [datetime] NOT NULL,
+	[Activo] [bit] NOT NULL,
+ CONSTRAINT [PK_Cliente] PRIMARY KEY CLUSTERED 
+(
+	[IdCliente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Encargado]    Script Date: 01/05/2024 17:58:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Encargado](
+	[IdEncargado] [int] NOT NULL,
+	[Identificacion] [varchar](12) NOT NULL,
+	[FechaIngreso] [datetime] NOT NULL,
+ CONSTRAINT [PK_Encargado] PRIMARY KEY CLUSTERED 
+(
+	[IdEncargado] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Pelicula]    Script Date: 01/05/2024 17:58:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Pelicula](
+	[IdPelicula] [int] NOT NULL,
+	[IdCategoria] [int] NOT NULL,
+	[Titulo] [varchar](100) NOT NULL,
+	[AnioLanzamiento] [int] NOT NULL,
+	[Idioma] [varchar](25) NOT NULL,
+ CONSTRAINT [PK_Pelicula] PRIMARY KEY CLUSTERED 
+(
+	[IdPelicula] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PeliculaxSucursal]    Script Date: 01/05/2024 17:58:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PeliculaxSucursal](
+	[IdSucursal] [int] NOT NULL,
+	[IdPelicula] [int] NOT NULL,
+	[Cantidad] [int] NOT NULL,
+ CONSTRAINT [PK_PeliculaxSucursal] PRIMARY KEY CLUSTERED 
+(
+	[IdSucursal] ASC,
+	[IdPelicula] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Persona]    Script Date: 01/05/2024 17:58:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Persona](
+	[Identificacion] [varchar](12) NOT NULL,
+	[Nombre] [varchar](25) NOT NULL,
+	[PrimerApellido] [varchar](25) NOT NULL,
+	[SegundoApellido] [varchar](25) NULL,
+	[FechaNacimiento] [datetime] NOT NULL,
+ CONSTRAINT [PK_Persona] PRIMARY KEY CLUSTERED 
+(
+	[Identificacion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Prestamo]    Script Date: 01/05/2024 17:58:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Prestamo](
+	[IdPrestamo] [int] IDENTITY(1,1) NOT NULL,
+	[IdCliente] [int] NOT NULL,
+	[IdSucursal] [int] NOT NULL,
+	[IdPelicula] [int] NOT NULL,
+	[FechaPrestamo] [datetime] NOT NULL,
+	[PendienteDevolucion] [bit] NOT NULL,
+ CONSTRAINT [PK_Prestamo] PRIMARY KEY CLUSTERED 
+(
+	[IdPrestamo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Sucursal]    Script Date: 01/05/2024 17:58:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Sucursal](
+	[IdSucursal] [int] NOT NULL,
+	[IdEncargado] [int] NOT NULL,
+	[Nombre] [varchar](50) NOT NULL,
+	[Direccion] [varchar](150) NOT NULL,
+	[Telefono] [varchar](10) NOT NULL,
+	[Activo] [bit] NOT NULL,
+ CONSTRAINT [PK_Sucursal] PRIMARY KEY CLUSTERED 
+(
+	[IdSucursal] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Cliente]  WITH CHECK ADD  CONSTRAINT [FK_Cliente_Persona] FOREIGN KEY([Identificacion])
+REFERENCES [dbo].[Persona] ([Identificacion])
+GO
+ALTER TABLE [dbo].[Cliente] CHECK CONSTRAINT [FK_Cliente_Persona]
+GO
+ALTER TABLE [dbo].[Encargado]  WITH CHECK ADD  CONSTRAINT [FK_Encargado_Persona] FOREIGN KEY([Identificacion])
+REFERENCES [dbo].[Persona] ([Identificacion])
+GO
+ALTER TABLE [dbo].[Encargado] CHECK CONSTRAINT [FK_Encargado_Persona]
+GO
+ALTER TABLE [dbo].[Pelicula]  WITH CHECK ADD  CONSTRAINT [FK_Pelicula_CategoriaPelicula] FOREIGN KEY([IdCategoria])
+REFERENCES [dbo].[CategoriaPelicula] ([IdCategoria])
+GO
+ALTER TABLE [dbo].[Pelicula] CHECK CONSTRAINT [FK_Pelicula_CategoriaPelicula]
+GO
+ALTER TABLE [dbo].[PeliculaxSucursal]  WITH CHECK ADD  CONSTRAINT [FK_PeliculaxSucursal_Pelicula] FOREIGN KEY([IdPelicula])
+REFERENCES [dbo].[Pelicula] ([IdPelicula])
+GO
+ALTER TABLE [dbo].[PeliculaxSucursal] CHECK CONSTRAINT [FK_PeliculaxSucursal_Pelicula]
+GO
+ALTER TABLE [dbo].[PeliculaxSucursal]  WITH CHECK ADD  CONSTRAINT [FK_PeliculaxSucursal_Sucursal] FOREIGN KEY([IdSucursal])
+REFERENCES [dbo].[Sucursal] ([IdSucursal])
+GO
+ALTER TABLE [dbo].[PeliculaxSucursal] CHECK CONSTRAINT [FK_PeliculaxSucursal_Sucursal]
+GO
+ALTER TABLE [dbo].[Prestamo]  WITH CHECK ADD  CONSTRAINT [FK_Prestamo_Cliente] FOREIGN KEY([IdCliente])
+REFERENCES [dbo].[Cliente] ([IdCliente])
+GO
+ALTER TABLE [dbo].[Prestamo] CHECK CONSTRAINT [FK_Prestamo_Cliente]
+GO
+ALTER TABLE [dbo].[Prestamo]  WITH CHECK ADD  CONSTRAINT [FK_Prestamo_PeliculaxSucursal] FOREIGN KEY([IdSucursal], [IdPelicula])
+REFERENCES [dbo].[PeliculaxSucursal] ([IdSucursal], [IdPelicula])
+GO
+ALTER TABLE [dbo].[Prestamo] CHECK CONSTRAINT [FK_Prestamo_PeliculaxSucursal]
+GO
+ALTER TABLE [dbo].[Sucursal]  WITH CHECK ADD  CONSTRAINT [FK_Sucursal_Encargado] FOREIGN KEY([IdEncargado])
+REFERENCES [dbo].[Encargado] ([IdEncargado])
+GO
+ALTER TABLE [dbo].[Sucursal] CHECK CONSTRAINT [FK_Sucursal_Encargado]
+GO
