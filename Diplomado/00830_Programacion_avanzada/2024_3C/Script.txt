@@ -1,0 +1,95 @@
+/* ============================================================*/
+/*   Database name:  AEROUNED                                   */
+/*   DBMS name:      Microsoft SQL Server 7.x                  */
+/*   Created on:     20/06/2024  07:00 PM                      */
+/*   Generada Por:   Tutor Marlon Dixon Gomez              */
+/* =========================================================== */
+USE MASTER
+go
+
+
+Create database TIENDAUNED
+
+go
+
+USE [TIENDAUNED]
+GO
+
+/* Tabla Categoria */
+Create table Categoria(
+	id numeric (4,0),
+	nombre varchar (20),
+	descripcion varchar(40),
+	constraint pk_categoria primary key (id)
+)
+
+/* Tabla Articulo */
+Create table Articulo(
+	id  numeric (4,0),
+	descripcion varchar(40),
+	id_categoria numeric (4,0),
+	marca varchar(20),
+	activo bit not null,
+	constraint pk_articulo primary key (id),
+	constraint fk_articulo01 foreign key (id_categoria) references Categoria (id),
+)
+
+/* Tabla Vendedor */
+Create table Vendedor(
+	identificacion  numeric (11,0),
+	nombre varchar(40),
+	apellido1 varchar(40),
+	apellido2 varchar(40),
+	fec_nacimiento datetime,
+	fec_ingreso datetime,
+	constraint pk_vendedor primary key (identificacion)
+)
+
+/* Tabla Sucursal */
+Create table Sucursal(
+	id  numeric (4,0),
+	nombre varchar(40),
+	direccion varchar(80),
+	telefono varchar(12),
+	id_vendedor  numeric (11,0),
+	activo bit not null,
+	constraint pk_sucursal primary key (id),
+	constraint fk_sucursal01 foreign key (id_vendedor) references Vendedor (identificacion)
+)
+
+
+/* Tabla Cliente */
+Create table Cliente(
+	identificacion numeric (11,0),
+	nombre varchar(40),
+	apellido1 varchar(40),
+	apellido2 varchar(40),
+	fec_nacimiento datetime,
+	activo bit not null,
+	constraint pk_cliente primary key (identificacion)
+)
+
+
+/* Tabla Articulo por Sucursal */
+
+Create table ArticuloxSucursal (
+	codigo numeric (4,0),
+	id_sucursal  numeric (4,0),
+	id_articulo  numeric(4,0),
+	cantidad numeric (4,0),
+	constraint pk_articuloxsucursal primary key (codigo),
+	constraint fk_articuloxsucursal01 foreign key (id_sucursal) references Sucursal (id),
+	constraint fk_articuloxsucursal02 foreign key (id_articulo) references Articulo (id)
+)
+
+/* Tabla Reserva  */
+
+Create table Reserva (
+	id numeric (4,0),
+	cod_art_sucursal  numeric (4,0),
+	id_cliente  numeric(11,0),
+	fec_reserva datetime,
+	constraint pk_reserva primary key (id),
+	constraint fk_reserva01 foreign key (cod_art_sucursal) references ArticuloxSucursal (codigo),
+	constraint fk_reserva02 foreign key (id_cliente) references Cliente (identificacion)
+)
